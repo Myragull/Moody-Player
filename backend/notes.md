@@ -1,0 +1,203 @@
+## Dependencies Install:
+- npm init -y 
+- npm i mongoose,express,dotenv(firdtly after installing these adds your .env and node modules in .gitignore before pushing your code to github bcoz its a good practice to not to push the nodemodlues and .env)
+- install multer for handling form data as a middleware
+
+### Errors
+- you ahve to use require express again and again 
+
+## steps:
+
+<details>
+<summary>⿡ <code>1 server.js</code> – Starts the Server</summary>
+
+```js
+const app = require('./src/app');
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+```
+
+🔍 Why?
+
+- Keeps server config separate from the main app logic
+
+- Helps during testing (you can import app separately)
+
+- Clean separation of starting vs handling logic
+
+
+## 🛠 Best Practice
+
+✅ Only keep app.listen() here
+✅ No middleware or route logic
+
+</details>
+---
+<details>
+<summary>⿢ <code>2 app.js</code> – Core App Logic</summary>
+
+```js
+const express = require('express');
+const app = express();
+
+// Middleware to parse JSON
+app.use(express.json());
+
+// Later you'll add your routes here:
+// const songRoutes = require('./routes/song.route');
+//app.use('/api', songRoutes);
+
+module.exports = app;
+```
+
+🔍 Why?
+
+This is your Express application instance
+
+It contains middleware (like express.json())
+
+Also where you plug in your route files
+
+
+🛠 Best Practice
+
+✅ All your route files should be connected here
+✅ Use this file as the main app logic for flexibility
+
+</details>
+---
+<details>
+<summary>⿣ <code>3 routes/song.route.js</code> – Song POST Endpoint</summary>const express = require('express');
+const router = express.Router();
+
+router.post('/songs', (req, res) => {
+  const song = req.body;
+  console.log(req.body);
+
+  res.status(201).json({ 
+    message: 'Song created successfully', 
+    song: song 
+  });
+});
+
+module.exports = router;
+
+🔍 Why?
+
+This handles all /songs POST requests
+
+Keeps routing logic separate and organized
+
+You can later add more routes in this file (GET, PUT, DELETE)
+
+
+🛠 Best Practice
+
+✅ Always use express.Router() for cleaner modular routes
+✅ Export it and plug into app.js with a prefix (like /api)
+
+</details>
+---
+
+<details>
+<summary>⿤ 4 💡 How Routing Works with <code>app.use('/api', songRoutes)</code></summary>🧠 Step-by-step:
+
+🔁 What you wrote:
+
+const songRoutes = require('./src/routes/song.route');
+app.use('/api', songRoutes);
+
+
+---
+
+🔍 What does this mean?
+
+require('./src/routes/song.route')
+You're importing all your route logic from song.route.js.
+
+app.use('/api', songRoutes)
+You're telling Express:
+
+> “Hey Express, use all the routes from songRoutes, and prefix them with /api in the URL.”
+
+
+
+
+
+---
+
+📌 Why we do this?
+
+To group all your backend API routes under a common prefix, like:
+
+/api/songs
+
+/api/users
+
+/api/products
+
+
+This is very common in real-world APIs to separate frontend paths (like /home) from backend API endpoints.
+
+
+---
+
+🧠 Real Example Breakdown:
+
+Let’s say this is inside song.route.js:
+
+router.post('/songs', (req, res) => {
+  // logic
+});
+
+This means that inside the routes file, the path is just /songs.
+
+But since we did:
+
+app.use('/api', songRoutes);
+
+Now the final route becomes:
+
+/api/songs
+
+So in Postman or frontend, you’ll send the request to:
+http://localhost:3000/api/songs
+
+
+---
+
+🎨 Visual Breakdown
+
+File	Code Snippet	Resulting URL
+
+song.route.js	router.post('/songs', ...)	/songs (relative path)
+app.js	app.use('/api', songRoutes)	/api/songs
+
+
+
+---
+
+
+
+POST /api/songs
+
+✅ Why this matters:
+
+Helps organize and namespace your routes (e.g. /api, /auth, /admin)
+
+Avoids confusion when you scale your backend
+
+Keeps route files clean by not repeating /api again and again
+
+
+🛠 Best Practice
+
+✅ Use meaningful prefixes (/api, /admin, etc.)
+✅ Group route files per resource (e.g., song, user, playlist)
+
+</details>
+---
+
