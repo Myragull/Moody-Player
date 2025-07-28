@@ -201,3 +201,42 @@ Keeps route files clean by not repeating /api again and again
 </details>
 ---
 
+<details>
+  <summary>Step 5: Handling Form Data and File Uploads with<code>Multer</code></summary>
+
+  *📌 Problem Faced:*
+  While testing with Postman, using only express.json() worked fine for raw data (like title, artist, mood).  
+  But when switching to *form-data* and uploading a file, the server was receiving undefined.
+
+  *🛠 Solution:*
+  - Installed Multer to handle multipart/form-data (form data with files).
+  - Configured Multer with memoryStorage() or diskStorage() depending on need.
+  - Added .single('file') middleware inside the POST API to handle the file.
+
+  *🔧 Sample Code:*
+
+  ```js
+  const multer = require('multer');
+  const upload = multer({ storage: multer.memoryStorage() });
+
+  router.post('/songs', upload.single('file'), (req, res) => {
+    console.log(req.body); // Will now include text fields
+    console.log(req.file); // Will now include uploaded file info
+
+    res.status(201).json({
+      message: 'Song created successfully',
+      data: req.body,
+    });
+  });
+  ```
+
+✅ Key Notes:
+
+'file' in upload.single('file') must match the key used in Postman form-data.
+
+Without Multer, Express cannot parse form-data containing files.
+
+
+</details>
+
+---
