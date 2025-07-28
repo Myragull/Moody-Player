@@ -236,6 +236,20 @@ Keeps route files clean by not repeating /api again and again
 
 Without Multer, Express cannot parse form-data containing files.
 
+also use .array instead of .single when you are sending multiple files
+
+
+</details>
+
+---
+
+<details>
+  <summary>Step 6: starts <code>mongodb-atlas,mongodb-compass</code> for the conection than made the connection fn in <code>db.js</code></summary>
+
+  *📌 Solution:*
+- starts the mongodb atlas , compass put the url in .env than require it in server.js 
+- made a file db.js than made the conection fn and require it in server.js
+
 
 </details>
 
