@@ -2,6 +2,7 @@
 - npm init -y 
 - npm i mongoose,express,dotenv(firdtly after installing these adds your .env and node modules in .gitignore before pushing your code to github bcoz its a good practice to not to push the nodemodlues and .env)
 - install multer for handling form data as a middleware
+- install imagekit --save for dat storage providers
 
 ### Errors
 - you ahve to use require express again and again 
@@ -35,7 +36,10 @@ app.listen(3000, () => {
 ✅ No middleware or route logic
 
 </details>
+
 ---
+
+
 <details>
 <summary>⿢ <code>2 app.js</code> – Core App Logic</summary>
 
@@ -68,7 +72,10 @@ Also where you plug in your route files
 ✅ Use this file as the main app logic for flexibility
 
 </details>
+
 ---
+
+
 <details>
 <summary>⿣ <code>3 routes/song.route.js</code> – Song POST Endpoint</summary>const express = require('express');
 const router = express.Router();
@@ -100,6 +107,7 @@ You can later add more routes in this file (GET, PUT, DELETE)
 ✅ Export it and plug into app.js with a prefix (like /api)
 
 </details>
+
 ---
 
 <details>
@@ -199,6 +207,8 @@ Keeps route files clean by not repeating /api again and again
 ✅ Group route files per resource (e.g., song, user, playlist)
 
 </details>
+
+
 ---
 
 <details>
@@ -250,6 +260,16 @@ also use .array instead of .single when you are sending multiple files
 - starts the mongodb atlas , compass put the url in .env than require it in server.js 
 - made a file db.js than made the conection fn and require it in server.js
 
+
+</details>
+
+---
+
+<details>
+  <summary>Step 7: Also adds <code>images</code> to upload and store in  <code>DB</code></summary>
+
+  *📌 Solution:*
+- change the multer inside the post api for uploading of multiple files
 
 </details>
 
