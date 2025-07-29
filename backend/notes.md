@@ -274,3 +274,15 @@ also use .array instead of .single when you are sending multiple files
 </details>
 
 ---
+
+
+<details>
+  <summary>Step 8: created  <code>storage.service.js</code>to create a fn to upload files in <code>Imagekit.io</code></summary>
+
+  *📌 Solution:*
+- created the fn uploadfile() to store the images or audios into imagekit this fn receive a parameter
+- inside of song.routes.js we will import this fn and when request is send along with the data from the postman than image and aaaudio will be passed to thsi fn as an argument and it will stores them in Moody-Player folder
+- tha it will return the urls of both 
+</details>
+
+---

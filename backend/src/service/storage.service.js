@@ -13,7 +13,7 @@ function uploadFile(file) {
               file:file.buffer, 
               fileName: new mongoose.Types.ObjectId().toString(), 
             //   fileName: Math.random().toString(36).substring(7),
-              folder:"cohort-songs",
+              folder:"Moody-Player",
 
         }, (error,result) => {
             if(error) {
