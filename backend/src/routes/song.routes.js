@@ -1,4 +1,4 @@
-const Song= require('../../db/models/song.model');
+const Song = require("../../db/models/song.model");
 const express = require("express");
 const multer = require("multer");
 const uploadFile = require("../service/storage.service");
@@ -16,7 +16,7 @@ router.post("/songs", uploadFields, async (req, res) => {
     const { title, artist, mood } = req.body;
     const audioFile = req.files.audio?.[0];
     const imageFile = req.files.image?.[0];
-console.log(req.body)
+    console.log(req.body);
 
     if (!audioFile || !imageFile) {
       return res.status(400).json({ error: "Audio and image are required." });
@@ -26,7 +26,7 @@ console.log(req.body)
       uploadFile(audioFile),
       uploadFile(imageFile),
     ]);
-        console.log(audioRes, imageRes)
+    console.log(audioRes, imageRes);
     const newSong = await Song.create({
       title,
       artist,
@@ -51,15 +51,14 @@ console.log(req.body)
   }
 });
 
-router.get('/songs', async (req, res) => {
-    const {mood} = req.query;
-    const songs = await Song.find({ mood :mood})
+router.get("/songs", async (req, res) => {
+  const { mood } = req.query;
+  const songs = await Song.find({ mood: mood });
 
-    res.status(200).json({
-        message: 'Songs fetched successfully',
-        songs
-    });
+  res.status(200).json({
+    message: "Songs fetched successfully",
+    songs,
+  });
 });
-
 
 module.exports = router;
